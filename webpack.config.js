@@ -1,4 +1,5 @@
 const path = require('path')
+const Dotenv = require('dotenv-webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
@@ -14,7 +15,8 @@ module.exports = {
     contentBase: './dist'
   },
   plugins: [
-  new UglifyJsPlugin({ sourceMap: true }),
+   new Dotenv(),
+   new UglifyJsPlugin({ sourceMap: true }),
    new CleanWebpackPlugin(['dist']),
    new HtmlWebpackPlugin({
      title: 'template',
@@ -22,7 +24,7 @@ module.exports = {
      inject: 'body'
    })
  ],
-  module: {
+ module: {
     rules: [
       {
         test: /\.css$/,
@@ -34,18 +36,18 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/
+      },
+      {
+        test: /\.js$/,
+        exclude: [
+          /node_modules/,
+          /spec/
+        ],
+        loader: "babel-loader",
+        options: {
+          presets: ['es2015']
+        }
       }
     ]
-  },
-    {                         
-	test: /\.js$/,
-	exclude: [
-  	/node_modules/,
-  	/spec/
-	],
-	loader: "babel-loader",
-	options: {
-  	presets: ['es2015']
-	}
-    }
+  }
 };
