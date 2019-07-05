@@ -9,38 +9,43 @@ $(document).ready(function(){
     $(".display-param-warning").hide();
 
     let doctorService = new DoctorService();
-    // let promise = findLocationRequestedAndSetParams(doctorService);
-    //
-    // if(promise === null){
-    //   console.log('her');
-    // return;
-    //
-    // }
+    let searchLocation = $("#location-search").val()
+    if(searchLocation !== ''){
+      findLocationAndSearchDoctors(doctorService, searchLocation);
+    } else {
+      searchDoctorsAndDisplay(doctorService, collectParams(''));
+    }
 
-    let locationPromise = doctorService.getLocation($("#location-search").val());
-    locationPromise.then(function(res){
-      let body = JSON.parse(res);
-      let lat = body.results[0].locations[0].latLng.lat;
-      let long = body.results[0].locations[0].latLng.lng;
-      let geoLocation = lat + '%2C' + long + '%2C100';
-      let params = collectParams(geoLocation);
-      if(!checkMinParams(params)){
-        $(".display-param-warning").show();
-        return;
-      }
-
-    // }).then(function(){
-      let promise = doctorService.getDoctorBy(params);
-      promise.then(function(response){
-        $(".doctorSearch-form").hide();
-        let body = JSON.parse(response);
-        displayDoctors(body.data);
-      }, function(error){
-        console.log('error');
-      })
-    })
   })
-});
+})
+
+function searchDoctorsAndDisplay(doctorService, params){
+  let promise = doctorService.getDoctorBy(params);
+  promise.then(function(response){
+    $(".doctorSearch-form").hide();
+    let body = JSON.parse(response);
+    displayDoctors(body.data);
+  }, function(error){
+    console.log('error');
+  })
+
+}
+
+function findLocationAndSearchDoctors(doctorService, locationToSearch){
+  let locationPromise = doctorService.getLocation(locationToSearch);
+  locationPromise.then(function(res){
+    let body = JSON.parse(res);
+    let lat = body.results[0].locations[0].latLng.lat;
+    let long = body.results[0].locations[0].latLng.lng;
+    let geoLocation = lat + '%2C' + long + '%2C100';
+    let params = collectParams(geoLocation);
+    if(!checkMinParams(params)){
+      $(".display-param-warning").show();
+      return;
+    }
+    searchDoctorsAndDisplay(doctorService, params);
+  });
+}
 
 function displayDoctors(doctors){
   $("#display-results-list").empty();
