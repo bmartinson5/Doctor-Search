@@ -18,8 +18,7 @@ export class DoctorService {
   }
 
   getLocation(city){
-    //const mapApiKey = process.env.exports.mapApiKey;
-    const mapApiKey = 'eakaoAu0gIIHMlfP9pBu4Sd03lNOU9N0';
+    const mapApiKey = process.env.exports.mapApiKey;
     let url = 'http://open.mapquestapi.com/geocoding/v1/address?key='+ mapApiKey + '&location=' + city;
     return new Promise(function(resolve, reject) {
       let request = new XMLHttpRequest();
@@ -34,7 +33,7 @@ export class DoctorService {
       request.open("GET", url, true);
       request.send();
     });
-    
+
   }
 
   createUrl(listOfParams){

@@ -1,8 +1,8 @@
 # Doctor Search
 
-## Author
+#### A webpage to search for Doctors in your area, July 2019
 
-Ben Martinson
+#### By Ben Martinson
 
 ## Description
 
@@ -13,13 +13,17 @@ returns is then displayed below the search form. Information that is displayed f
 image. Messages are displayed when no doctors are found and when the user does not input a name nor a location, the Better Doctor Api
 needs at least a name or a location to return results.
 
+## Setup/Installation Requirements
 
-## Setup
-Clone this repository, use 'npm install' to install dependencies, then use 'npm run start' to
+* Clone this repository
+* Use 'npm install' to install dependencies
+* then use 'npm run start' to run the dev server, which will open the page in chrome browser.
+* The Api keys needed for the api calls are stored in a .env file.
 
-run the dev server, which will open the page in chrome browser. The Api keys needed for the api calls are
+## Known Bugs
 
-stored in a .env file.
+* Pictures are often displayed as silhouettes.
+* Searching by medical issue isn't efficient. Not a lot of results are displayed this way because the query has to be an exact match to the specialty_uid of the api results.
 
 ## Technologies Used
 
