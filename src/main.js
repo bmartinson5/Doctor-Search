@@ -3,6 +3,7 @@ import './styles.css'
 import { DoctorService } from './doctor-service';
 
 $(document).ready(function(){
+  //search button clicked
   $(".doctor-search-form").submit(function(e){
     e.preventDefault();
     $(".display-param-warning").hide();
@@ -19,7 +20,9 @@ $(document).ready(function(){
     //let promise = doctorService.getDoctorBy([['location','37.773,-122.413']]);
 
     promise.then(function(response){
+      $(".doctorSearch-form").hide();
       let body = JSON.parse(response);
+      displayDoctors(body);
       console.log(body);
     }, function(error){
       console.log('error');
@@ -27,6 +30,14 @@ $(document).ready(function(){
   })
 
 })
+
+function displayDoctors(doctors){
+  $(".display-results").text("")
+  if(doctors.length === 0){
+    $(".display-results").text("No doctors were found.")
+    return
+  }
+}
 
 function checkMinParams(params){
   //look for user input of name or location field - need at least one to be filled
