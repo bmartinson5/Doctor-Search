@@ -41,8 +41,8 @@ function checkMinParams(params){
 
 function collectParams(){
   let params = [
-                  ['specialty_uid', $("#medical-issue-search").val()],
                   ['name', $("#name-search").val()],
+                  ['specialty_uid', $("#medical-issue-search").val()],
                   ['location', $("#location-search").val()]
                   //['location', '37.773%2C-122.413%2C100']
                ];
