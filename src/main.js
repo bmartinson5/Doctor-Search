@@ -9,33 +9,38 @@ $(document).ready(function(){
     $(".display-param-warning").hide();
 
     let doctorService = new DoctorService();
-    let params = collectParams();
-
-    if(!checkMinParams(params)){
-      $(".display-param-warning").show();
-      return
-    }
+    // let promise = findLocationRequestedAndSetParams(doctorService);
+    //
+    // if(promise === null){
+    //   console.log('her');
+    // return;
+    //
+    // }
 
     let locationPromise = doctorService.getLocation($("#location-search").val());
     locationPromise.then(function(res){
       let body = JSON.parse(res);
-      console.log(body);
-    })
-    
-    let promise = doctorService.getDoctorBy(params);
-    //let promise = doctorService.getDoctorBy([['location','37.773,-122.413']]);
+      let lat = body.results[0].locations[0].latLng.lat;
+      let long = body.results[0].locations[0].latLng.lng;
+      let geoLocation = lat + '%2C' + long + '%2C100';
+      let params = collectParams(geoLocation);
+      if(!checkMinParams(params)){
+        $(".display-param-warning").show();
+        return;
+      }
 
-    promise.then(function(response){
-      $(".doctorSearch-form").hide();
-      let body = JSON.parse(response);
-      displayDoctors(body.data);
-      console.log(body);
-    }, function(error){
-      console.log('error');
+    // }).then(function(){
+      let promise = doctorService.getDoctorBy(params);
+      promise.then(function(response){
+        $(".doctorSearch-form").hide();
+        let body = JSON.parse(response);
+        displayDoctors(body.data);
+      }, function(error){
+        console.log('error');
+      })
     })
   })
-
-})
+});
 
 function displayDoctors(doctors){
   $("#display-results-list").empty();
@@ -76,11 +81,11 @@ function checkMinParams(params){
   return found;
 }
 
-function collectParams(){
+function collectParams(location){
   let params = [
                   ['name', $("#name-search").val()],
                   ['specialty_uid', $("#medical-issue-search").val()],
-                  ['location', $("#location-search").val()]
+                  ['location', location]
                   //['location', '37.773%2C-122.413%2C100']
                ];
   //return params that were filled in - not void

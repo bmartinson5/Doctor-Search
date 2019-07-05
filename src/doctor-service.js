@@ -34,7 +34,7 @@ export class DoctorService {
       request.open("GET", url, true);
       request.send();
     });
-
+    
   }
 
   createUrl(listOfParams){
