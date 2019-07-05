@@ -7,15 +7,10 @@ Ben Martinson
 ## Description
 
 This webpage uses the Better Doctor Api to search for doctors based on the users search query which is a combination of
-
 three different parameters; location, name and medical issue. The location given by the user converts into a lagitude and longitude
-
 using the Mapquest Geocoding Api. The query parameters are sent to the Better doctor Api and the list of doctors that it
-
 returns is then displayed below the search form. Information that is displayed for each doctor includes: name, phone, address, and an
-
 image. Messages are displayed when no doctors are found and when the user does not input a name nor a location, the Better Doctor Api
-
 needs at least a name or a location to return results.
 
 
