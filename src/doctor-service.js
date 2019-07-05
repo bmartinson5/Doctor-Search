@@ -17,6 +17,26 @@ export class DoctorService {
     });
   }
 
+  getLocation(city){
+    //const mapApiKey = process.env.exports.mapApiKey;
+    const mapApiKey = 'eakaoAu0gIIHMlfP9pBu4Sd03lNOU9N0';
+    let url = 'http://open.mapquestapi.com/geocoding/v1/address?key='+ mapApiKey + '&location=' + city;
+    return new Promise(function(resolve, reject) {
+      let request = new XMLHttpRequest();
+
+      request.onload = function() {
+        if (this.status === 200) {
+          resolve(request.response);
+        } else {
+          reject(Error(request.statusText));
+        }
+      }
+      request.open("GET", url, true);
+      request.send();
+    });
+
+  }
+
   createUrl(listOfParams){
       const apiKey = process.env.exports.apiKey;
       let startUrl = 'https://api.betterdoctor.com/2016-03-01/doctors?';

@@ -16,6 +16,12 @@ $(document).ready(function(){
       return
     }
 
+    let locationPromise = doctorService.getLocation($("#location-search").val());
+    locationPromise.then(function(res){
+      let body = JSON.parse(res);
+      console.log(body);
+    })
+    
     let promise = doctorService.getDoctorBy(params);
     //let promise = doctorService.getDoctorBy([['location','37.773,-122.413']]);
 
