@@ -22,7 +22,7 @@ $(document).ready(function(){
     promise.then(function(response){
       $(".doctorSearch-form").hide();
       let body = JSON.parse(response);
-      displayDoctors(body);
+      displayDoctors(body.data);
       console.log(body);
     }, function(error){
       console.log('error');
@@ -32,11 +32,31 @@ $(document).ready(function(){
 })
 
 function displayDoctors(doctors){
-  $(".display-results").text("")
+  $("#display-results-list").empty();
   if(doctors.length === 0){
     $(".display-results").text("No doctors were found.")
     return
   }
+  doctors.forEach(function(doctor){
+    console.log(doctor);
+    if(!doctor.profile || !doctor.practices[0] || !doctor.practices[0].visit_address || !doctor.practices[0].phones){
+      return;
+    }
+    let profile = doctor.profile;
+    let address = doctor.practices[0].visit_address;
+    let phone = doctor.practices[0].phones[0].number;
+    console.log('here');
+
+    $("#display-results-list").append(
+        `<li>
+
+          ${profile.first_name} ${profile.last_name}<br>
+          ${address.street}, ${address.city}, ${address.state} ${address.zip}<br>
+          ${phone}
+        </li><br>`
+
+      );
+  })
 }
 
 function checkMinParams(params){
