@@ -6,7 +6,15 @@ $(document).ready(function(){
   //search button clicked
   $(".doctor-search-form").submit(function(e){
     e.preventDefault();
+
+    $("#display-results-list").empty();
     $(".display-param-warning").hide();
+
+    if($("#location-search").val() == '' && $("#name-search").val() == ''){
+      $(".display-param-warning").show();
+      return;
+    }
+
 
     let doctorService = new DoctorService();
     let searchLocation = $("#location-search").val()
@@ -39,18 +47,14 @@ function findLocationAndSearchDoctors(doctorService, locationToSearch){
     let long = body.results[0].locations[0].latLng.lng;
     let geoLocation = lat + '%2C' + long + '%2C100';
     let params = collectParams(geoLocation);
-    if(!checkMinParams(params)){
-      $(".display-param-warning").show();
-      return;
-    }
     searchDoctorsAndDisplay(doctorService, params);
   });
 }
 
 function displayDoctors(doctors){
-  $("#display-results-list").empty();
+  $(".display-none-found").hide();
   if(doctors.length === 0){
-    $(".display-results").text("No doctors were found.")
+    $(".display-none-found").show();
     return
   }
   doctors.forEach(function(doctor){
@@ -64,26 +68,13 @@ function displayDoctors(doctors){
     console.log('here');
 
     $("#display-results-list").append(
-        `<li>
-
-          ${profile.first_name} ${profile.last_name}<br>
-          ${address.street}, ${address.city}, ${address.state} ${address.zip}<br>
-          ${phone}
-        </li><br>`
-
-      );
+      `<li>
+        ${profile.first_name} ${profile.last_name}<br>
+        ${address.street}, ${address.city}, ${address.state} ${address.zip}<br>
+        ${phone}
+      </li><br>`
+    );
   })
-}
-
-function checkMinParams(params){
-  //look for user input of name or location field - need at least one to be filled
-  //required by the better doctor api
-  let found = false;
-  params.forEach(function(param){
-    if(param[0] === 'name' || param[0] === 'location')
-      found = true;
-  })
-  return found;
 }
 
 function collectParams(location){
