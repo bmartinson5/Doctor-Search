@@ -58,20 +58,23 @@ function displayDoctors(doctors){
     return
   }
   doctors.forEach(function(doctor){
-    console.log(doctor);
     if(!doctor.profile || !doctor.practices[0] || !doctor.practices[0].visit_address || !doctor.practices[0].phones){
       return;
     }
     let profile = doctor.profile;
     let address = doctor.practices[0].visit_address;
     let phone = doctor.practices[0].phones[0].number;
-    console.log('here');
+    let image = '';
+    if(profile.image_url)
+      image = `<img src="${profile.image_url}"`;
 
     $("#display-results-list").append(
       `<li>
+        ${image}<br><br>
         ${profile.first_name} ${profile.last_name}<br>
         ${address.street}, ${address.city}, ${address.state} ${address.zip}<br>
-        ${phone}
+        ${phone}<br>
+        Accepting new Patients: ${doctor.practices[0].accepts_new_patients}
       </li><br>`
     );
   })

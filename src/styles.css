@@ -1,3 +1,7 @@
+body {
+  margin-left: 100px;
+}
+
 .display-param-warning, .display-none-found {
   display: none;
 }
