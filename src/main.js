@@ -15,7 +15,6 @@ $(document).ready(function(){
       return;
     }
 
-
     let doctorService = new DoctorService();
     let searchLocation = $("#location-search").val()
     if(searchLocation !== ''){
@@ -85,7 +84,6 @@ function collectParams(location){
                   ['name', $("#name-search").val()],
                   ['specialty_uid', $("#medical-issue-search").val()],
                   ['location', location]
-                  //['location', '37.773%2C-122.413%2C100']
                ];
   //return params that were filled in - not void
   return params.filter(function(param){ if(param[1]) return param; })

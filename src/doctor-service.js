@@ -48,7 +48,5 @@ export class DoctorService {
       console.dir(startUrl + middleUrl + endUrl);
 
       return startUrl + middleUrl + endUrl;
-      //return 'https://api.betterdoctor.com/2016-03-01/doctors?name=Stanley&specialty_uid=general-surgeon&location=37.773%2C-122.413%2C100&skip=0&limit=10&user_key=975cdf755dccdb62421b7e6dbe27b255';
-      //return 'https://api.betterdoctor.com/2016-03-01/practices?name=Cary&location=37.773%2C-122.413%2C100&user_location=37.773%2C-122.413&skip=0&limit=10&user_key=975cdf755dccdb62421b7e6dbe27b255';
   }
 }
